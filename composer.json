@@ -1,0 +1,19 @@
+{
+    "name": "calderacc/maptype-bundle",
+    "description": "Add a map as form type",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Malte Hübner",
+            "email": "malte@caldera.cc"
+        }
+    ],
+    "require": {
+        "php": "^7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Caldera\\MapTypeBundle\\": ""
+        }
+    }
+}
