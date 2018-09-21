@@ -9,13 +9,45 @@
 
     <div id="mapid" style="height: 100px;"></div>
 
+    {% for child in form %}
+        {{ form_row(child) }}
+    {% endfor %}
+
     <script>
-        var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+        var mapId = 'mapid';
+
+        var latLng = getLatLng();
+
+        var mymap = L.map(mapId).setView(latLng, 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
             maxZoom: 18,
         }).addTo(mymap);
+
+        var marker = L.marker(latLng, { draggable: true }).addTo(mymap);
+
+        marker.on('dragend', updateInputFields);
+
+        function updateInputFields() {
+            var latLng = marker.getLatLng();
+
+            $('#{{ form.latitude.vars.id }}').val(latLng.lat);
+            $('#{{ form.longitude.vars.id }}').val(latLng.lng);
+        }
+
+        function getLatLng() {
+            var latitude = $('#{{ form.latitude.vars.id }}').val();
+            var longitude = $('#{{ form.longitude.vars.id }}').val();
+
+            var latLng = new L.latLng(latitude, longitude);
+
+            console.log(latLng);
+            return latLng;
+        }
+
     </script>
+
+
 {% endblock %}
 
