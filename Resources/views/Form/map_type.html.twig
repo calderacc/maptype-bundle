@@ -7,11 +7,9 @@
             integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
             crossorigin=""></script>
 
-    <div id="mapid" style="height: 100px;"></div>
+    <div id="mapid" style="height: 250px;"></div>
 
-    {% for child in form %}
-        {{ form_row(child) }}
-    {% endfor %}
+    {{ form_widget(form) }}
 
     <script>
         var mapId = 'mapid';
@@ -32,13 +30,13 @@
         function updateInputFields() {
             var latLng = marker.getLatLng();
 
-            $('#{{ form.latitude.vars.id }}').val(latLng.lat);
-            $('#{{ form.longitude.vars.id }}').val(latLng.lng);
+            $('#{{ form.vars.id }}').val(latLng.lat + ',' + latLng.lng);
         }
 
         function getLatLng() {
-            var latitude = $('#{{ form.latitude.vars.id }}').val();
-            var longitude = $('#{{ form.longitude.vars.id }}').val();
+            var value = $('#{{ form.vars.id }}').val();
+
+            var [latitude, longitude] = value.split(',');
 
             var latLng = new L.latLng(latitude, longitude);
 
